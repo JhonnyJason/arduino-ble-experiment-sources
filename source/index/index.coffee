@@ -10,5 +10,5 @@ window.onload = ->
 
 
 appStartup = ->
-    ## which modules shall be kickstarted?
+    Modules.blemodule.start()
     return

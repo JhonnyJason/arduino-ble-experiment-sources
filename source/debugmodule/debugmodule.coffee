@@ -7,6 +7,8 @@ debugmodule.initialize = () ->
 
 debugmodule.modulesToDebug = 
     unbreaker: true
-    configmodule: true
+    blemodule: true
+    # configmodule: true
+    uicommandsmodule: true
 
 export default debugmodule

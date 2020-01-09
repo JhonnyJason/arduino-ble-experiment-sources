@@ -11,7 +11,7 @@ configmodule.initialize = () ->
     return    
 
 #region exposedProperties
-configmodule.exampleURL = 'https://example.website.at'
+configmodule.deviceName = 'Ardidino1234#'
 #endregion
 
 export default configmodule

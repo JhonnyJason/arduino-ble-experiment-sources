@@ -10,5 +10,4 @@ window.onload = ->
 
 
 appStartup = ->
-    Modules.blemodule.start()
     return

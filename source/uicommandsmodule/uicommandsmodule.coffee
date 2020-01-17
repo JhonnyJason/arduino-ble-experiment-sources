@@ -1,11 +1,15 @@
 uicommandsmodule = {name: "uicommandsmodule"}
 
 #region modulesFromTheEnvironment
+ble = null
 #endregion
 
 #region internalProperties
-ble = null
-scanButton = null
+#region DOMElements
+requireDeviceButton = null
+disconnectButton = null
+startBenchmarksButton = null
+#endregion
 #endregion
 
 
@@ -20,16 +24,47 @@ print = (arg) -> console.log(arg)
 uicommandsmodule.initialize = () ->
     log "uicommandsmodule.initialize"
     ble = allModules.blemodule
-    log ble
-    scanButton = document.getElementById("scan-button")
+
+    requireDeviceButton = document.getElementById("require-device-button")
+    disconnectButton = document.getElementById("disconnect-button")
+    startBenchmarksButton = document.getElementById("start-benchmarks-button")
     
-    scanButton.addEventListener("click", scanButtonClicked)
+    requireDeviceButton.addEventListener("click", requireDeviceButtonClicked)
+    disconnectButton.addEventListener("click", disconnectButtonClicked)
+    startBenchmarksButton.addEventListener("click", startBenchmarksButtonClicked)
+    setInitialState()
     return
 #region internalFunctions
-scanButtonClicked = ->
-    log "scanButtonClicked"
-    log ble
-    ble.scan()
+setInitialState = ->
+    log "setInitialState"
+    disabled = {}
+    # disabled.requireDeviceButton = true
+    disabled.disconnectButton = true
+    disabled.startBenchmarksButton = true
+    setDisabledButtons(disabled)
+
+setDisabledButtons = (disabled) ->
+    log "setDisabledButtons"
+    if disabled.requireDeviceButton then requireDeviceButton.disabled = true
+    else requireDeviceButton.disabled = false
+    if disabled.disconnectButton then disconnectButton.disabled = true
+    else disconnectButton.disabled = false
+    if disabled.startBenchmarksButton then startBenchmarksButton.disabled = true
+    else startBenchmarksButton.disabled = false
+    return
+
+requireDeviceButtonClicked = ->
+    log "requireDeviceButtonClicked"
+    log("We should require the device!")
+    ble.requireDevice()
+
+disconnectButtonClicked = ->
+    log "disconnectButtonClicked"
+    log("We should disconnect!")
+    
+startBenchmarksButtonClicked = ->
+    log "startBenchmarksButtonClicked"
+    log("We should start the benchmarks!")
 
 #endregion
 

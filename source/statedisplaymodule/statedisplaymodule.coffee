@@ -3,6 +3,10 @@ statedisplaymodule = {name: "statedisplaymodule"}
 #region modulesFromTheEnvironment
 #endregion
 
+#region DOMElements
+feedbackBlock = null
+#endregion
+
 #region printLogFunctions
 ##############################################################################
 log = (arg) ->
@@ -13,12 +17,16 @@ print = (arg) -> console.log(arg)
 ##############################################################################
 statedisplaymodule.initialize = () ->
     log "statedisplaymodule.initialize"
+    feedbackBlock = document.getElementById("feedback-block")
     return
     
 #region internalFunctions
 #endregion
 
 #region exposedFunctions
+statedisplaymodule.displayFeedback = (feedback) ->
+    log "statedisplaymodule.displayFeedback"
+    feedbackBlock.innerHTML = feedback
 #endregion
 
 module.exports = statedisplaymodule

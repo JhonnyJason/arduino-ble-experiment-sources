@@ -1,6 +1,7 @@
 uistatemodule = {name: "uistatemodule"}
 
 #region modulesFromTheEnvironment
+uiCommands = null
 #endregion
 
 #region printLogFunctions
@@ -13,12 +14,20 @@ print = (arg) -> console.log(arg)
 ##############################################################################
 uistatemodule.initialize = () ->
     log "uistatemodule.initialize"
+    uiCommands = allModules.uicommandsmodule
     return
     
 #region internalFunctions
 #endregion
 
 #region exposedFunctions
+uistatemodule.setDisconnected = ->
+    log "uistatemodule.setStateDisconnected"
+    uiCommands.setStateDisconnected()
+
+uistatemodule.setConnected = ->
+    log "uistatemodule.setStateConnected"
+    uiCommands.setStateConnected()
 #endregion
 
 module.exports = uistatemodule

@@ -2,6 +2,7 @@ uicommandsmodule = {name: "uicommandsmodule"}
 
 #region modulesFromTheEnvironment
 ble = null
+benchmarks = null
 #endregion
 
 #region internalProperties
@@ -24,7 +25,8 @@ print = (arg) -> console.log(arg)
 uicommandsmodule.initialize = () ->
     log "uicommandsmodule.initialize"
     ble = allModules.blemodule
-
+    benchmarks = allModules.benchmarkmodule
+    
     requireDeviceButton = document.getElementById("require-device-button")
     disconnectButton = document.getElementById("disconnect-button")
     startBenchmarksButton = document.getElementById("start-benchmarks-button")
@@ -55,20 +57,28 @@ setDisabledButtons = (disabled) ->
 
 requireDeviceButtonClicked = ->
     log "requireDeviceButtonClicked"
-    log("We should require the device!")
     ble.requireDevice()
 
 disconnectButtonClicked = ->
     log "disconnectButtonClicked"
-    log("We should disconnect!")
+    ble.disconnect()
     
 startBenchmarksButtonClicked = ->
     log "startBenchmarksButtonClicked"
-    log("We should start the benchmarks!")
+    benchmarks.start()
 
 #endregion
 
 #region exposedFunctions
+uicommandsmodule.setStateConnected = ->
+    log "uicommandsmodule.setStateConnected"
+    disabled = {}
+    setDisabledButtons(disabled)
+
+uicommandsmodule.setStateDisconnected = ->
+    log "uicommandsmodule.setStateDisconnected"
+    setInitialState()
+
 #endregion
 
 module.exports = uicommandsmodule

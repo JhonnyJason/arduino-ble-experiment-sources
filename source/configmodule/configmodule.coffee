@@ -28,12 +28,18 @@ configmodule.initialize = () ->
 #endregion
 
 #region exposedProperties
+#region bleProperties
+configmodule.dataService = "19b10001-e8f2-537e-4f6c-d104768a1214"
+configmodule.dataCharacteristic = "19b10002-e8f2-537e-4f6c-d104768a1214"
 configmodule.deviceOptions =
-    acceptAllDevices: true
-    # filters: [
-    #     services: ['19b10002-e8f2-537e-4f6c-d104768a1214']
-    #     # name: 'Ardidino1234'
-    # ]
+    # acceptAllDevices: true #only use this when we donot provide filters!
+    filters: [
+        services: ['19b10001-e8f2-537e-4f6c-d104768a1214']
+        name: 'Ardidino1234#'
+    ]
+    optionalServices: ['19b10001-e8f2-537e-4f6c-d104768a1214']
+#endregion
+configmodule.timeframeSizeMS = 10000
 #endregion
 
 export default configmodule

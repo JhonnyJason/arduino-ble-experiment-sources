@@ -3,13 +3,15 @@ blemodule = {name: "blemodule"}
 #region modulesFromTheEnvironment
 cfg = null
 stateDisplay = null
+uiState = null
 #endregion
 
 #region internalProperties
-deviceOptions = null
-activeServer = null
+connectedDevice = null
+connectedServer = null
+dataCharacteristic = null
+isConnected = false
 #endregion
-
 
 #region printLogFunctions
 ##############################################################################
@@ -24,25 +26,39 @@ print = (arg) -> console.log(arg)
 blemodule.initialize = () ->
     log "blemodule.initialize"
     cfg = allModules.configmodule
+    uiState = allModules.uistatemodule
     stateDisplay = allModules.statedisplaymodule
-    deviceOptions = cfg.deviceOptions
     return
     
 #region internalFunctions
-# getCurrentBluetoothObject = -> ble = navigator.bluetooth
+saveDataCharacteristic = ->
+    log "saveDataCharacteristic"
+    service = await connectedServer.getPrimaryService(cfg.dataService)
+    dataCharacteristic = await service.getCharacteristic(cfg.dataCharacteristic)
+
 connectDevice = (device) ->
     log "connectDevice"
-    try
-        server = await device.gatt.connect()
-        message = "" + server
-        stateDisplay.displayFeedback(message)
-        olog server
-        activeServer = server
-    catch error
-        message = "" + error
-        stateDisplay.displayFeedback(message)
-        print "Error on connect!"
-        print message
+    device.addEventListener("gattserverdisconnected", deviceDisconnected)
+    server = await device.gatt.connect()
+
+    #region checkSomeDeviceInfo
+    message = "" + device.gatt
+    stateDisplay.displayFeedback(message)
+    log "device name: " + device.name
+    log "device id: " + device.id
+    log "device.gatt.connected: " + device.gatt.connected
+    #endregion
+    
+    connectedDevice = device
+    connectedServer = server
+    isConnected = true
+    return
+
+deviceDisconnected = (arg) ->
+    log "deviceDisconnected"
+    log arg
+    stateDisplay.displayFeedback("Device Disconnected")
+    uiState.setDisconnected()
 #endregion
 
 #region exposedFunctions
@@ -50,18 +66,38 @@ blemodule.requireDevice = ->
     log "ble.requireDevice"
     ble = navigator.bluetooth
     try 
-        device = await ble.requestDevice(deviceOptions)
+        device = await ble.requestDevice(cfg.deviceOptions)
         await connectDevice(device)
+        await saveDataCharacteristic()
+        uiState.setConnected()
     catch error
         message = "" + error
         stateDisplay.displayFeedback(message)
         print "Error on requestDevice!"
         print message
 
+blemodule.disconnect = ->
+    log "blemodule.disconnect"
+    return unless isConnected and connectDevice
+    await connectedDevice.gatt.disconnect()
+    log "succeessfully disconnected"
+    stateDisplay.displayFeedback("Manually Disconnected")
+    uiState.setDisconnected()
 
-blemodule.disconnectDevice = ->
-    log "blemodule.disconnectDevice"
+blemodule.stopData = ->
+    log "blemodule.stopData"
+    await dataCharacteristic.stopNotifications()
+    return
 
+blemodule.startData = ->
+    log "blemodule.stopData"
+    await dataCharacteristic.startNotifications()
+    return
+
+blemodule.onData = (fun) ->
+    log "blemodule.onData"
+    dataCharacteristic.addEventListener('characteristicvaluechanged', fun)
+    return
 #endregion
 
 module.exports = blemodule

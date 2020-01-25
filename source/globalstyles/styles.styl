@@ -1,0 +1,36 @@
+/*======================================================
+Fonts
+======================================================*/
+@font-face 
+    font-family: "SourceSansPro"
+    src: url("/fonts/SourceSansPro-Regular.ttf")
+@font-face 
+    font-family: "Roboto"
+    src: url("/fonts/Roboto-Regular.ttf")
+
+body
+    font-family: "SourceSansPro"
+
+h1,h2,h3,h4,th
+    font-family: "Roboto"
+
+// gobalstyles styles
+.per-second::after
+    content " /s"
+    color grey
+    font-style italic
+
+.packages-per-second::after
+    content " packages/s"
+    color grey
+    font-style italic
+.bytes-per-second::after
+    content " bytes/s"
+    color grey
+    font-style italic
+
+
+.milliseconds::after
+    content " ms"
+    color grey
+    font-style italic

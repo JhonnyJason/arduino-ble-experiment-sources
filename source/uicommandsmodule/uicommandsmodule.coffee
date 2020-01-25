@@ -13,7 +13,6 @@ startBenchmarksButton = null
 #endregion
 #endregion
 
-
 #region printLogFunctions
 ##############################################################################
 log = (arg) ->
@@ -36,9 +35,14 @@ uicommandsmodule.initialize = () ->
     startBenchmarksButton.addEventListener("click", startBenchmarksButtonClicked)
     setInitialState()
     return
+
+isBenchmarking = false
+
 #region internalFunctions
 setInitialState = ->
     log "setInitialState"
+    startBenchmarksButton.textContent = "Start Benchmarks"
+    isBenchmarking = false
     disabled = {}
     # disabled.requireDeviceButton = true
     disabled.disconnectButton = true
@@ -65,13 +69,22 @@ disconnectButtonClicked = ->
     
 startBenchmarksButtonClicked = ->
     log "startBenchmarksButtonClicked"
-    benchmarks.start()
-
+    if isBenchmarking then benchmarks.stop()
+    else benchmarks.start()
+    return
+    
 #endregion
 
 #region exposedFunctions
+uicommandsmodule.setStateBenchmarking = ->
+    log "uicommandsmodule.setStateBenchmarking"
+    startBenchmarksButton.textContent = "Stop Benchmarks"
+    isBenchmarking = true
+
 uicommandsmodule.setStateConnected = ->
     log "uicommandsmodule.setStateConnected"
+    startBenchmarksButton.textContent = "Start Benchmarks"
+    isBenchmarking = false
     disabled = {}
     setDisabledButtons(disabled)
 

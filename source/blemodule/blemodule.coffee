@@ -42,13 +42,12 @@ connectDevice = (device) ->
     server = await device.gatt.connect()
 
     #region checkSomeDeviceInfo
-    message = "" + device.gatt
-    stateDisplay.displayFeedback(message)
     log "device name: " + device.name
     log "device id: " + device.id
     log "device.gatt.connected: " + device.gatt.connected
     #endregion
-    
+
+    stateDisplay.displayFeedback("connected")    
     connectedDevice = device
     connectedServer = server
     isConnected = true
@@ -57,7 +56,6 @@ connectDevice = (device) ->
 deviceDisconnected = (arg) ->
     log "deviceDisconnected"
     log arg
-    stateDisplay.displayFeedback("Device Disconnected")
     uiState.setDisconnected()
 #endregion
 
@@ -81,7 +79,6 @@ blemodule.disconnect = ->
     return unless isConnected and connectDevice
     await connectedDevice.gatt.disconnect()
     log "succeessfully disconnected"
-    stateDisplay.displayFeedback("Manually Disconnected")
     uiState.setDisconnected()
 
 blemodule.stopData = ->

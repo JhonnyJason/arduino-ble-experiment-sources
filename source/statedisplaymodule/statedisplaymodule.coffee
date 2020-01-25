@@ -18,6 +18,7 @@ print = (arg) -> console.log(arg)
 statedisplaymodule.initialize = () ->
     log "statedisplaymodule.initialize"
     feedbackBlock = document.getElementById("feedback-block")
+    feedbackBlock.textContent = "not-connected"
     return
     
 #region internalFunctions
@@ -26,7 +27,8 @@ statedisplaymodule.initialize = () ->
 #region exposedFunctions
 statedisplaymodule.displayFeedback = (feedback) ->
     log "statedisplaymodule.displayFeedback"
-    feedbackBlock.innerHTML = feedback
+    return unless (typeof feedback == "string") 
+    feedbackBlock.textContent = feedback
 #endregion
 
 module.exports = statedisplaymodule

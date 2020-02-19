@@ -7,9 +7,11 @@ debugmodule.initialize = () ->
 
 debugmodule.modulesToDebug = 
     unbreaker: true
-    benchmarkmodule: true
-    blemodule: true
+    bannermodule: true
+    # benchmarkmodule: true
+    # blemodule: true
     # configmodule: true
-    uicommandsmodule: true
+    settingspagemodule: true
+    # uicommandsmodule: true
 
 export default debugmodule

@@ -198,6 +198,11 @@ benchmarkmodule.stop = ->
     await ble.stopData()
     return
 
+benchmarkmodule.resetTimeFraming = ->
+    log "benchmarkmodule.updateTimeFraming"
+    stopTimeframing()
+    startTimeframing()
+    return
 
 #endregion
 

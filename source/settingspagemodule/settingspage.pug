@@ -3,5 +3,26 @@
     #back-from-settings-button
         svg(viewBox='0 0 24 24')
             path(fill='currentColor' d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z')
+    
     #settings-content
-        h1 Change the Settings here!
+
+        #settings-content-separator-top
+
+        h1 Device, Service, Characteristic
+        select#settings-device-select
+        h2 Device Name
+        input#settings-device-name-input
+        h2 Data Service
+        input#settings-device-service-input
+        p Hint: The correctness of the device name and data Service are important for finding the device.
+        h2 Data Characteristic
+        input#settings-device-characteristic-input
+        p Hint: The Data Characteristic must emit Notifications - the notification rate is benchmarked.
+
+        .settings-content-separator
+        
+        h1 Benchmark settings
+        h2 Run Time ms
+        input#settings-run-time-input(type="number")
+        
+        #settings-content-separator-bottom

@@ -1,6 +1,7 @@
 import bannermodule from "./bannermodule"
 import benchmarkmodule from "./benchmarkmodule"
 import blemodule from "./blemodule"
+import chartpagemodule from "./chartpagemodule"
 import configmodule from "./configmodule"
 import debugmodule from "./debugmodule"
 import settingspagemodule from "./settingspagemodule"
@@ -12,6 +13,7 @@ Modules = {
     bannermodule,
     benchmarkmodule,
     blemodule,
+    chartpagemodule,
     configmodule,
     debugmodule,
     settingspagemodule,
